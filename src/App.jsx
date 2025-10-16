@@ -1,3 +1,32 @@
+import { PageWrapper } from "./components/PageWrapper"
+import { Container } from "./components/Container"
+import { Header } from "./components/Header"
+import { Search } from "./components/Search"
+import { ShortList } from "./components/ShortList"
+import { PuppiesList } from "./components/PuppiesList"
+import { NewPuppyForm } from "./components/NewPuppyForm"
+
 export function App() {
-    return <h1 className="bg-green-500 font-mono text-4xl text-white">Hello World!!!</h1>
+    return (
+        <PageWrapper>
+            <Container>
+                <Header />
+                <Main />
+            </Container>
+        </PageWrapper>
+    )
+}
+
+
+function Main() {
+    return (
+        <main>
+            <div className="mt-24 grid gap-8 sm:grid-cols-2">   
+                <Search />
+                <ShortList />
+            </div>
+                <PuppiesList />
+                <NewPuppyForm />
+        </main>
+    )
 }
