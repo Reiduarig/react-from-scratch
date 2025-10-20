@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { type Recipe } from "../types";
 
-export function RecipesList({ recipes }) {
-    const [selected, setSelected] = useState(null);
+
+export function RecipesList({ recipes }: { recipes: Recipe[] }) {
+    const [selected, setSelected] = useState<Recipe | null>(null);
     if (!recipes.length) {
         return <div className="text-center text-slate-400 mt-12">No se encontraron recetas.</div>;
     }
@@ -9,7 +11,16 @@ export function RecipesList({ recipes }) {
         <>
             <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {recipes.map(recipe => (
-                    <RecipeCard key={recipe.id} recipe={recipe} onClick={() => setSelected(recipe)} />
+                    <li
+                        key={recipe.id}
+                        className="overflow-clip rounded-lg bg-white shadow-md ring-black/5 hover:translate-y-2 transition-transform cursor-pointer"
+                        onClick={() => setSelected(recipe)}
+                        tabIndex={0}
+                        onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && setSelected(recipe)}
+                        title={`Ver detalles de ${recipe.name}`}
+                    >
+                        <RecipeCard recipe={recipe}  />
+                    </li>
                 ))}
             </ul>
             {/* Drawer lateral */}
@@ -69,16 +80,14 @@ export function RecipesList({ recipes }) {
     );
 }
 
-function RecipeCard({ recipe, onClick }) {
+type RecipeCardProps = {
+    recipe: Recipe;
+    
+};
+
+function RecipeCard({ recipe } : RecipeCardProps) {
     return (
-        <li
-            key={recipe.id}
-            className="overflow-clip rounded-lg bg-white shadow-md ring-black/5 hover:translate-y-2 transition-transform cursor-pointer"
-            onClick={onClick}
-            tabIndex={0}
-            onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && onClick()}
-            title={`Ver detalles de ${recipe.name}`}
-        >
+        <>
             <img
                 className="aspect-square object-cover w-full"
                 alt={recipe.name}
@@ -105,6 +114,6 @@ function RecipeCard({ recipe, onClick }) {
                     ))}
                 </div>
             </div>
-        </li>
+        </>
     );
 }

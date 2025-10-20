@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { type FormErrors } from "../types";
 
 const initialState = {
     name: "",
@@ -6,7 +7,7 @@ const initialState = {
     prepTimeMinutes: "",
     cookTimeMinutes: "",
     servings: "",
-    difficulty: "Easy",
+    difficulty: "Fácil",
     cuisine: "",
     caloriesPerServing: "",
     tags: "",
@@ -17,7 +18,7 @@ const initialState = {
 
 export function NewRecipeForm() {
     const [form, setForm] = useState(initialState);
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState<FormErrors>({});
 
     function handleChange(e) {
         const { name, value } = e.target;
@@ -25,7 +26,7 @@ export function NewRecipeForm() {
     }
 
     function validate() {
-        const newErrors = {};
+        const newErrors: FormErrors = {};
         if (!form.name) newErrors.name = "El nombre es obligatorio";
         if (!form.image) newErrors.image = "La imagen es obligatoria";
         if (!form.prepTimeMinutes || isNaN(form.prepTimeMinutes)) newErrors.prepTimeMinutes = "Tiempo de preparación válido requerido";
@@ -83,9 +84,9 @@ export function NewRecipeForm() {
                 <div>
                     <label className="block font-medium">Dificultad *</label>
                     <select name="difficulty" value={form.difficulty} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded p-2">
-                        <option value="Easy">Fácil</option>
-                        <option value="Medium">Media</option>
-                        <option value="Hard">Difícil</option>
+                        <option value="Fácil">Fácil</option>
+                        <option value="Media">Media</option>
+                        <option value="Difícil">Difícil</option>
                     </select>
                 </div>
                 <div>

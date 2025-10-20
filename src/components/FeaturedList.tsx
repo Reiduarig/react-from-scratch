@@ -1,8 +1,10 @@
-import recipes from "../data/recipes";
+import { type Recipe } from "../types";
 
-export function FeaturedList({ onSelect }) {
+export function FeaturedList({ recipes, onSelect }: { recipes: Recipe[] , onSelect?: (recipe: Recipe) => void }) {
     // Top 3 recetas mejor valoradas
-    const top = [...recipes].sort((a, b) => b.rating - a.rating).slice(0, 3);
+    const top = [...recipes].sort((a, b) => b.rating - a.rating).slice(0, 4);
+    
+    
     return (
         <section className="w-full">
             <h2 className="font-extrabold text-xl text-slate-800 mb-3 flex items-center gap-2">
@@ -20,7 +22,11 @@ export function FeaturedList({ onSelect }) {
                         title={`Ver ${r.name}`}
                     >
                         <div className="w-28 h-28 rounded-xl overflow-hidden mb-3 shadow">
-                            <img src={r.image} alt={r.name} className="object-cover w-full h-full" />
+                            <img 
+                                src={r.image} 
+                                alt={r.name} 
+                                className="object-cover w-full h-full" 
+                            />
                         </div>
                         <div className="text-center">
                             <div className="font-bold text-base text-slate-700 mb-1 truncate">{r.name}</div>
